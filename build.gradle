@@ -10,11 +10,20 @@ repositories {
 }
 
 dependencies {
-    testImplementation platform('org.junit:junit-bom:5.10.0')
-    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.0'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+
+    //testImplementation platform('org.junit:junit-bom:5.10.0')
+    //testImplementation 'org.junit.jupiter:junit-jupiter'
+    //testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    implementation 'org.testng:testng:7.11.0'
+
+    testImplementation 'org.seleniumhq.selenium:selenium-java:4.18.1'
+    //implementation 'org.seleniumhq.selenium:selenium-devtools-v148:4.18.1'
 }
 
 test {
     useJUnitPlatform()
+
 }
