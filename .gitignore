@@ -41,3 +41,10 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+
+# Test resources (если нужно)
+src/test/resources/users.txt
+
+
+# Test
+src/test/java/com/saucedemo/testing/testOne.java
