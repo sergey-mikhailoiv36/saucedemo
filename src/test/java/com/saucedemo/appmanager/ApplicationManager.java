@@ -9,6 +9,8 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.Browser;
 
 import java.time.Duration;
+import java.util.Objects;
+
 import static org.junit.jupiter.api.Assertions.fail;
 
 
@@ -33,11 +35,11 @@ public class ApplicationManager {
 
     public void start() {
 
-         if (browser == "CHROME"){
+         if (Objects.equals(browser, "CHROME")){
              driver = new ChromeDriver();
-         } else if (browser =="FIREFOX") {
+         } else if (Objects.equals(browser, "FIREFOX")) {
              driver = new FirefoxDriver();
-         } else if (browser =="EDGE") {
+         } else if (Objects.equals(browser, "EDGE")) {
              driver = new EdgeDriver();
          } else {
              System.out.println("Не корректно выбран браузер");
