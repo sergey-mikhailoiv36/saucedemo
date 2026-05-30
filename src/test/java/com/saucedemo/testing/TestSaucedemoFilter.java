@@ -5,23 +5,23 @@ import org.junit.jupiter.api.Test;
 import java.util.concurrent.TimeUnit;
 
 
-public class testSaucedemoFilter extends TestBase {
+public class TestSaucedemoFilter extends TestBase {
 
 
     @Test
     public void testUntitledTestCase() throws Exception {
         app.login("standard_user", "secret_sauce");
-        app.getNavigationHaloer().selectFilter("hilo");
+        app.getNavigationHelper().selectFilter("hilo");
         TimeUnit.SECONDS.sleep(3);
-        app.getNavigationHaloer().goTo("cart");
+        app.getNavigationHelper().goTo("cart");
         TimeUnit.SECONDS.sleep(3);
-        app.getNavigationHaloer().goTo("shop");
+        app.getNavigationHelper().goTo("shop");
         TimeUnit.SECONDS.sleep(3);
-        app.getNavigationHaloer().goTo("cart");
+        app.getNavigationHelper().goTo("cart");
         TimeUnit.SECONDS.sleep(3);
-        app.getNavigationHaloer().goTo("allIteems");
+        app.getNavigationHelper().goTo("allIteems");
         TimeUnit.SECONDS.sleep(5);
-        app.getNavigationHaloer().goTo("logout");
+        app.getNavigationHelper().goTo("logout");
         TimeUnit.SECONDS.sleep(5);
     }
 

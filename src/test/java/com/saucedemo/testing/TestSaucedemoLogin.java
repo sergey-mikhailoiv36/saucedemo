@@ -7,7 +7,7 @@ import java.util.concurrent.TimeUnit;
 
 
 
-public class testSaucedemoLogin extends TestBase {
+public class TestSaucedemoLogin extends TestBase {
 
 
     @Test

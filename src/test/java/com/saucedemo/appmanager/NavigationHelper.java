@@ -5,12 +5,10 @@ import org.openqa.selenium.WebDriver;
 
 public class NavigationHelper {
 
-    WebDriver driver;
-
+    private WebDriver driver;
     public NavigationHelper(WebDriver driver) {
         this.driver=driver;
     }
-    //protected WebDriver driver;
 
     public void selectFilter(String filter) {     // принимает занчения "az/za/lohi/hilo"
         driver.findElement(By.cssSelector(".product_sort_container")).click();
@@ -37,4 +35,7 @@ public class NavigationHelper {
                 System.out.println("Такой странице нет");
             }
         }
+
+
+
 }

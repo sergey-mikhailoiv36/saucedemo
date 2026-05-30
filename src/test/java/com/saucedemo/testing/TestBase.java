@@ -3,12 +3,13 @@ package com.saucedemo.testing;
 import com.saucedemo.appmanager.ApplicationManager;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.openqa.selenium.remote.Browser;
 
 
 public class TestBase {
 
 
-    public final ApplicationManager app = new ApplicationManager();
+    public final ApplicationManager app = new ApplicationManager("CHROME"); // вщзможные значения EDGE/FIREFOX/CHROME
 
     @BeforeEach
     public void setUp() throws Exception {
