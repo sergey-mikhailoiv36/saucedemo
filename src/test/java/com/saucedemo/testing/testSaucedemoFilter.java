@@ -11,17 +11,17 @@ public class testSaucedemoFilter extends TestBase {
     @Test
     public void testUntitledTestCase() throws Exception {
         app.login("standard_user", "secret_sauce");
-        app.selectFilter("hilo");
+        app.getNavigationHaloer().selectFilter("hilo");
         TimeUnit.SECONDS.sleep(3);
-        app.goTo("cart");
+        app.getNavigationHaloer().goTo("cart");
         TimeUnit.SECONDS.sleep(3);
-        app.goTo("shop");
+        app.getNavigationHaloer().goTo("shop");
         TimeUnit.SECONDS.sleep(3);
-        app.goTo("cart");
+        app.getNavigationHaloer().goTo("cart");
         TimeUnit.SECONDS.sleep(3);
-        app.goTo("allIteems");
+        app.getNavigationHaloer().goTo("allIteems");
         TimeUnit.SECONDS.sleep(5);
-        app.goTo("logout");
+        app.getNavigationHaloer().goTo("logout");
         TimeUnit.SECONDS.sleep(5);
     }
 
