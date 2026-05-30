@@ -9,7 +9,7 @@ import org.openqa.selenium.remote.Browser;
 public class TestBase {
 
 
-    public final ApplicationManager app = new ApplicationManager("CHROME"); // вщзможные значения FIREFOX/CHROME/EDGE-"не работате(проблемы в сети)"/
+    public final ApplicationManager app = new ApplicationManager("CHROME"); // возможные значения FIREFOX/CHROME/EDGE-"не работате(проблемы в сети)"/
 
     @BeforeEach
     public void setUp() throws Exception {
