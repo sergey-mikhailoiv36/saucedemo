@@ -1,14 +1,18 @@
 package com.saucedemo.appmanager;
 
+import org.checkerframework.checker.nullness.qual.NonNull;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.Browser;
 
 import java.time.Duration;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.fail;
@@ -34,9 +38,9 @@ public class ApplicationManager {
 
 
     public void start() {
-
          if (Objects.equals(browser, "CHROME")){
-             driver = new ChromeDriver();
+             ChromeOptions options = getChromeOptions();
+             driver = new ChromeDriver(options);
          } else if (Objects.equals(browser, "FIREFOX")) {
              driver = new FirefoxDriver();
          } else if (Objects.equals(browser, "EDGE")) {
@@ -45,18 +49,13 @@ public class ApplicationManager {
              System.out.println("Не корректно выбран браузер");
          }
 
-
-
-
-
-
         driver.manage().window().maximize();
         baseUrl = "https://www.saucedemo.com/";
 
         navigationHelper = new NavigationHelper(driver);
         checHelper = new ChecHelper(driver);
 
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(60));
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
         js = (JavascriptExecutor) driver;
         driver.manage().window().maximize();
     }
@@ -76,8 +75,6 @@ public class ApplicationManager {
         }
     }
 
-
-
     public NavigationHelper getNavigationHelper() {
         return navigationHelper;
     }
@@ -85,5 +82,27 @@ public class ApplicationManager {
     public ChecHelper getChecHelper() {
         return checHelper;
     }
-}
 
+    private static @NonNull ChromeOptions getChromeOptions() {
+        ChromeOptions options = new ChromeOptions();
+        // 1. Самый важный флаг: выключает проверку утечек паролей
+        // Это отключает саму функцию безопасности браузера[citation:2]
+        options.addArguments("--disable-features=PasswordLeakDetection");
+
+        // 2. Настройки (prefs) для отключения менеджера паролей
+        Map<String, Object> prefs = new HashMap<>();
+        // Не предлагать сохранять пароли
+        prefs.put("credentials_enable_service", false);
+        // Отключить менеджер паролей
+        prefs.put("profile.password_manager_enabled", false);
+        // Явно отключить проверку на утечки в настройках профиля
+        prefs.put("profile.password_manager_leak_detection", false);
+
+        options.setExperimentalOption("prefs", prefs);
+
+        // (Опционально) Отключаем режим автоматизации, чтобы страницы вели себя "как обычно"
+        options.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});
+        return options;
+    }
+
+}

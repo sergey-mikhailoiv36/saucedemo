@@ -3,6 +3,8 @@ package com.saucedemo.appmanager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
+import java.util.Objects;
+
 public class NavigationHelper {
 
     private WebDriver driver;
@@ -17,25 +19,46 @@ public class NavigationHelper {
 
     public void goTo(String namePage) {
 
-        if (namePage == "cart") { //переход в казину
-            driver.findElement(By.id("shopping_cart_container")).click();
+        if (Objects.equals(namePage, "cart")) { //переход в казину
+            if (checPage("title", "Your Cart")){
+            return;
+            } else driver.findElement(By.id("shopping_cart_container")).click();
         }
-        else if (namePage == "shop") { //продолжить шопинг
-            driver.findElement(By.id("continue-shopping")).click();
+        else if (Objects.equals(namePage, "shop")) { //продолжить шопинг
+            if (checPage("title", "Products")){
+                return;
+            } else driver.findElement(By.id("continue-shopping")).click();
         }
-        else if (namePage == "allIteems") { //переход по кнопке
+        else if (Objects.equals(namePage, "allIteems")) { //переход по кнопке
+            if (checPage("title", "Products")){
+                return;
+            } else {
             driver.findElement(By.id("react-burger-menu-btn")).click();
             driver.findElement(By.id("inventory_sidebar_link")).click();
+            }
         }
-        else if (namePage == "logout") { //выйти из акаунта
-            driver.findElement(By.id("react-burger-menu-btn")).click();
-            driver.findElement(By.id("logout_sidebar_link")).click();
+        else if (Objects.equals(namePage, "logout")) { //выйти из акаунта
+            if (checPage("login_logo", "Swag Labs")){
+                return;
+            } else {
+                driver.findElement(By.id("react-burger-menu-btn")).click();
+                driver.findElement(By.id("logout_sidebar_link")).click();
+            }
         }
         else {
                 System.out.println("Такой странице нет");
             }
         }
 
+
+    private boolean isElementPresent(By locator) {
+        return !driver.findElements(locator).isEmpty();
+    }
+
+    private boolean checPage (String className,String namePage ){
+        return isElementPresent(By.className(className)) &&
+                driver.findElement(By.className(className)).getText().equals(namePage);
+    }
 
 
 }

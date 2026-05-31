@@ -12,17 +12,23 @@ public class TestSaucedemoFilter extends TestBase {
     public void testUntitledTestCase() throws Exception {
         app.login("standard_user", "secret_sauce");
         app.getNavigationHelper().selectFilter("hilo");
-        TimeUnit.SECONDS.sleep(3);
+       // TimeUnit.SECONDS.sleep(3);
         app.getNavigationHelper().goTo("cart");
-        TimeUnit.SECONDS.sleep(3);
+        app.getNavigationHelper().goTo("cart");
+       // TimeUnit.SECONDS.sleep(3);
         app.getNavigationHelper().goTo("shop");
-        TimeUnit.SECONDS.sleep(3);
+        app.getNavigationHelper().goTo("shop");
+      //  TimeUnit.SECONDS.sleep(3);
         app.getNavigationHelper().goTo("cart");
-        TimeUnit.SECONDS.sleep(3);
+        app.getNavigationHelper().goTo("cart");
+        app.getNavigationHelper().goTo("cart");
+       // TimeUnit.SECONDS.sleep(3);
         app.getNavigationHelper().goTo("allIteems");
-        TimeUnit.SECONDS.sleep(5);
+        //TimeUnit.SECONDS.sleep(5);
         app.getNavigationHelper().goTo("logout");
-        TimeUnit.SECONDS.sleep(5);
+       // TimeUnit.SECONDS.sleep(5);
+        //  app.getNavigationHelper().goTo("logout");
+     //   TimeUnit.SECONDS.sleep(5);
     }
 
 
