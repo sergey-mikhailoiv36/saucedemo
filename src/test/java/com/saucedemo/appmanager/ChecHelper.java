@@ -16,23 +16,24 @@ public class ChecHelper {
 
      public void checFilterPrice(String filter){
 
-
-         List<WebElement> elementList = driver.findElements(By.className("inventory_item_price"));
-         List<Double> meaningElement = new ArrayList<>();
+         List<WebElement> elementList = driver.findElements(By.className("inventory_item_price")); //ищем все елементы в которых хронятся цены
+         List<Double> valueElement = new ArrayList<>(); //создаем список для значений элкментов
 
          for (WebElement element : elementList) {
-             String elementText = element.getText();
-             double price = Double.parseDouble(elementText.replace("$", ""));
-             meaningElement.add(price);
+             String elementText = element.getText(); //записывем цены построчно из списка
+             double price = Double.parseDouble(elementText.replace("$", "")); //получаем цену и обрезаем "$"
+             valueElement.add(price); //записываем цены
          }
-            List<Double> expectedElement = new ArrayList<>(meaningElement);
+            List<Double> expectedElement = new ArrayList<>(valueElement);
 
          if (Objects.equals(filter, "hilo")){
             Collections.sort(expectedElement,Collections.reverseOrder()); //от большего к меньшему
-            Assertions.assertEquals(meaningElement,expectedElement);
+            Assertions.assertEquals(valueElement,expectedElement);
             } else if (Objects.equals(filter, "lohi")) {
              Collections.sort(expectedElement); //от меньшему к большему
-             Assertions.assertEquals(meaningElement,expectedElement);
+             Assertions.assertEquals(valueElement,expectedElement);
+         } else {
+             System.out.println("не выбран фильтр");
          }
 
      }
