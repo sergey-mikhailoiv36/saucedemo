@@ -24,12 +24,12 @@ public class NavigationHelper {
             return;
             } else driver.findElement(By.id("shopping_cart_container")).click();
         }
-        else if (Objects.equals(namePage, "shop")) { //продолжить шопинг
+        else if (Objects.equals(namePage, "shop")) { //продолжить шопинг "Continue Shopping"
             if (checPage("title", "Products")){
                 return;
             } else driver.findElement(By.id("continue-shopping")).click();
         }
-        else if (Objects.equals(namePage, "allIteems")) { //переход по кнопке
+        else if (Objects.equals(namePage, "allIteems")) { //переход по кнопке "All Items"
             if (checPage("title", "Products")){
                 return;
             } else {

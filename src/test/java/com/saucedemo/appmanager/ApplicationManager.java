@@ -8,7 +8,6 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.remote.Browser;
 
 import java.time.Duration;
 import java.util.HashMap;
@@ -16,8 +15,6 @@ import java.util.Map;
 import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.fail;
-
-
 
 public class ApplicationManager {
 
@@ -29,7 +26,7 @@ public class ApplicationManager {
 
     JavascriptExecutor js;
     private String baseUrl;
-    //private boolean acceptNextAlert = true;
+
     private StringBuffer verificationErrors = new StringBuffer();
 
     public ApplicationManager(String browser) {
@@ -38,7 +35,8 @@ public class ApplicationManager {
 
 
     public void start() {
-         if (Objects.equals(browser, "CHROME")){
+
+        if (Objects.equals(browser, "CHROME")){
              ChromeOptions options = getChromeOptions();
              driver = new ChromeDriver(options);
          } else if (Objects.equals(browser, "FIREFOX")) {
@@ -50,7 +48,6 @@ public class ApplicationManager {
          }
 
         driver.manage().window().maximize();
-        baseUrl = "https://www.saucedemo.com/";
 
         navigationHelper = new NavigationHelper(driver);
         checHelper = new ChecHelper(driver);
@@ -61,6 +58,7 @@ public class ApplicationManager {
     }
 
     public void login(String user, String password) {
+        baseUrl = "https://www.saucedemo.com/";
         driver.get(baseUrl);
         driver.findElement(By.id("user-name")).sendKeys(user);
         driver.findElement(By.id("password")).sendKeys(password);
