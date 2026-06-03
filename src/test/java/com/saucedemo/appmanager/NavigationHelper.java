@@ -17,7 +17,7 @@ public class NavigationHelper {
         driver.findElement(By.cssSelector("option[value='" + filter + "']")).click();
     }
 
-    public void goTo(String namePage) {
+    public void goTo(String namePage) { // принимает занчения "cart/shop/allIteems/logout/bactToProducts"
 
         if (Objects.equals(namePage, "cart")) { //переход в казину
             if (checPage("title", "Your Cart")){
@@ -28,6 +28,11 @@ public class NavigationHelper {
             if (checPage("title", "Products")){
                 return;
             } else driver.findElement(By.id("continue-shopping")).click();
+        }
+        else if (Objects.equals(namePage, "bactToProducts")) { //вернутся к товарарам
+            if (checPage("back-image", "Back to products")) {
+                return;
+            } else driver.findElement(By.id("back-to-products")).click();
         }
         else if (Objects.equals(namePage, "allIteems")) { //переход по кнопке "All Items"
             if (checPage("title", "Products")){

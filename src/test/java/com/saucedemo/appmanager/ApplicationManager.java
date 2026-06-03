@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 public class ApplicationManager {
 
     private String browser;
-    WebDriver driver;
+    public WebDriver driver;
 
     private NavigationHelper navigationHelper ;
     private ChecHelper checHelper ;

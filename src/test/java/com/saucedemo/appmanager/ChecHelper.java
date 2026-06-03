@@ -38,7 +38,7 @@ public class ChecHelper {
 
      }
 
-    public void checFilterName(String filter){
+     public void checFilterName(String filter){
 
         List<WebElement> elementList = driver.findElements(By.className("inventory_item_name")); //ищем все елементы в которых хронятся название товара
         List<String> valueElement = new ArrayList<>(); //создаем список для названий товара
