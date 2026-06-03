@@ -37,4 +37,29 @@ public class ChecHelper {
          }
 
      }
+
+    public void checFilterName(String filter){
+
+        List<WebElement> elementList = driver.findElements(By.className("inventory_item_name")); //ищем все елементы в которых хронятся название товара
+        List<String> valueElement = new ArrayList<>(); //создаем список для названий товара
+
+        for (WebElement element : elementList) {
+            valueElement.add(element.getText()); //записываем названия товаров
+        }
+        List<String> expectedElement = new ArrayList<>(valueElement); // копируем список товаров
+
+        if (Objects.equals(filter, "za")){
+            Collections.sort(expectedElement,Collections.reverseOrder()); //сортируем копиию списка от большего к меньшему
+            Assertions.assertEquals(valueElement,expectedElement); //сравниваем списки
+        } else if (Objects.equals(filter, "az")) {
+            Collections.sort(expectedElement); //от меньшему к большему
+            Assertions.assertEquals(valueElement,expectedElement);
+        } else {
+            System.out.println("не выбран фильтр");
+        }
+
+    }
+
+
+
 }

@@ -19,7 +19,19 @@ public class TestSaucedemoFilter extends TestBase {
         TimeUnit.SECONDS.sleep(5);
         app.getChecHelper().checFilterPrice("lohi");
 
-       // TimeUnit.SECONDS.sleep(3);
+
+        app.getNavigationHelper().selectFilter("az");
+        TimeUnit.SECONDS.sleep(5);
+        app.getChecHelper().checFilterName("az");
+
+
+
+        app.getNavigationHelper().selectFilter("za");
+        TimeUnit.SECONDS.sleep(5);
+        app.getChecHelper().checFilterName("za");
+
+
+        // TimeUnit.SECONDS.sleep(3);
         app.getNavigationHelper().goTo("cart");
         app.getNavigationHelper().goTo("cart");
        // TimeUnit.SECONDS.sleep(3);
