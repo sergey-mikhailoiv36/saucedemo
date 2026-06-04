@@ -43,7 +43,7 @@ public class NavigationHelper {
             }
         }
         else if (Objects.equals(namePage, "logout")) { //выйти из акаунта
-            if (checPage("login_logo", "Swag Labs")){
+            if (driver.getCurrentUrl().contains("saucedemo.com") && !driver.getCurrentUrl().contains("inventory")) {
                 return;
             } else {
                 driver.findElement(By.id("react-burger-menu-btn")).click();

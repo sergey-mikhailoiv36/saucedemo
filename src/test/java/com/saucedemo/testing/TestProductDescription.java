@@ -21,7 +21,7 @@ public class TestProductDescription extends TestBase{
     @Test
     @Order(2)
     public void testRandomProductDescription() {
-        app.login("problem_user", "secret_sauce");
+        app.login("standard_user", "secret_sauce");
         app.getNavigationHelper().goTo("allIteems");
         app.getChecHelper().checRandomProductDescription();
         app.getNavigationHelper().goTo("logout");
