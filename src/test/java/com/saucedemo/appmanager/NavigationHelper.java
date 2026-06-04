@@ -29,10 +29,15 @@ public class NavigationHelper {
                 return;
             } else driver.findElement(By.id("continue-shopping")).click();
         }
-        else if (Objects.equals(namePage, "bactToProducts")) { //вернутся к товарарам
+        else if (Objects.equals(namePage, "bactToProducts")) { //вернутся к товарам
             if (checPage("back-image", "Back to products")) {
                 return;
             } else driver.findElement(By.id("back-to-products")).click();
+        }
+        else if (Objects.equals(namePage, "placeAnOrder")) { //вернутся к товарам
+            if (checPage("back-image", "Back to products")) {
+                return;
+            } else driver.findElement(By.id("checkout")).click();
         }
         else if (Objects.equals(namePage, "allIteems")) { //переход по кнопке "All Items"
             if (checPage("title", "Products")){
@@ -54,6 +59,10 @@ public class NavigationHelper {
                 System.out.println("Такой странице нет");
             }
         }
+
+    public void addCart (String idButton){
+        driver.findElement(By.id(idButton)).click();
+    }
 
 
     private boolean isElementPresent(By locator) {

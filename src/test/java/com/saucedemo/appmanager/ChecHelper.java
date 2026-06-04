@@ -71,9 +71,10 @@ public class ChecHelper {
         app.getNavigationHelper().goTo("allIteems"); // переход на главную страницу, если уже на главной, то ничего не делаем
         int countProduct=driver.findElements(By.className("inventory_item_name")).size(); //считаем количество товаров
         List<Integer> faileProduct = new ArrayList<>();
+        app.getNavigationHelper().selectFilter("hilo"); //выбираем фильтр
 
         for (int i=0; i<countProduct;i++){ //выбираем каждый товар по очереди
-            app.getNavigationHelper().selectFilter("hilo"); //выбираем фильтр
+
 
             Object[] itemArray = (Object[]) itemArray(i); //создаем массив для описания товара на главной странице
             app.getNavigationHelper().selectProductNumber(i); //переходим на страницу товара
@@ -112,6 +113,52 @@ public class ChecHelper {
          if (!faileProduct.isEmpty()){ //если НЕ пустой (есть ошибки)
             Assertions.fail("ОР не совпадает с ФР");
         }
+    }
+
+    public Object[][] allItemArray(int countProduct,String namePage) {
+        Object[][] itemArray = new Object[countProduct][4];
+        for (int i = 0; i< countProduct; i++) {
+
+            //создаем массив для описания товара на главной странице
+
+            itemArray[i][0] = driver.findElements(By.className("inventory_item_name")).get(i).getText(); //записываем имя товара на главной странице
+            itemArray[i][1] = driver.findElements(By.className("inventory_item_desc")).get(i).getText(); //записываем описание товара на главной странице
+
+            String elementPrice = driver.findElements(By.className("inventory_item_price")).get(i).getText();
+            double price = Double.parseDouble(elementPrice.replace("$", "")); //получаем цену и обрезаем "$"
+
+            itemArray[i][2] = price; //записываем цены
+            if (Objects.equals(namePage, "product")) {
+                itemArray[i][3] = driver.findElements(By.cssSelector(".btn.btn_primary.btn_small.btn_inventory")).get(i).getAttribute("id"); //запоминаем ид кнопки
+            } else if (Objects.equals(namePage, "cart")) {
+                itemArray[i][3] = driver.findElements(By.cssSelector(".btn.btn_secondary.btn_small.cart_button")).get(i).getAttribute("id"); //запоминаем ид кнопки
+            }
+        }
+        return itemArray;
+    }
+
+    public void checProductInCart(Object @NonNull [][] itemArray, Object @NonNull [][]itemInCartArray){
+
+        for (int i=0;i<itemArray.length;i++){
+            Assertions.assertEquals(itemArray[i][0],itemInCartArray[i][0],
+                    String.format("Название товара %s не совпадает", itemArray[i][0]));
+
+            Assertions.assertEquals(itemArray[i][1],itemInCartArray[i][1],
+                    String.format("Описание товара %s не совпадает", itemArray[i][1]));
+
+            Assertions.assertEquals(itemArray[i][2],itemInCartArray[i][2],
+                    String.format("Цена товара %s не совпадает", itemArray[i][2] ));
+
+        }
+
+    }
+
+    public void checProductLists(Object @NonNull [] itemArray, Object @NonNull []itemInCartArray){
+        Assertions.assertEquals(itemArray.length,itemInCartArray.length,"Количество товаров на главной странице и в корзине не совпадает");
+    } // сравниваем количество товаров в массивах
+
+    public void checCardSumm(){
+
     }
 
     private boolean compareArrays(Object[] expected, Object[] actual) {

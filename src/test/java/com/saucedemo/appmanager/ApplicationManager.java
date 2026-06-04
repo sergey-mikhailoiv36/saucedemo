@@ -23,6 +23,7 @@ public class ApplicationManager {
 
     private NavigationHelper navigationHelper ;
     private ChecHelper checHelper ;
+    private FillHelper fillHelper ;
 
     JavascriptExecutor js;
     private String baseUrl;
@@ -51,6 +52,7 @@ public class ApplicationManager {
 
         navigationHelper = new NavigationHelper(driver);
         checHelper = new ChecHelper(driver,this);
+        fillHelper = new FillHelper(driver);
 
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
         js = (JavascriptExecutor) driver;
@@ -79,6 +81,10 @@ public class ApplicationManager {
 
     public ChecHelper getChecHelper() {
         return checHelper;
+    }
+
+    public FillHelper getFillHelper() {
+        return fillHelper;
     }
 
     private static @NonNull ChromeOptions getChromeOptions() {
