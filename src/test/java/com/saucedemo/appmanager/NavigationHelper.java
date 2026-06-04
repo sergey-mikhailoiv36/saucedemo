@@ -66,4 +66,7 @@ public class NavigationHelper {
     }
 
 
+    public void selectProductNumber(int i) {
+        driver.findElements(By.className("inventory_item_name")).get(i).click();
+    }
 }

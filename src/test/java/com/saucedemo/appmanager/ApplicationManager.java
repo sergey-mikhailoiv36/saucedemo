@@ -50,7 +50,7 @@ public class ApplicationManager {
         driver.manage().window().maximize();
 
         navigationHelper = new NavigationHelper(driver);
-        checHelper = new ChecHelper(driver);
+        checHelper = new ChecHelper(driver,this);
 
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
         js = (JavascriptExecutor) driver;

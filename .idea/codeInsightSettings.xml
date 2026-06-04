@@ -4,6 +4,7 @@
     <included-static-names>
       <name>org.hamcrest.CoreMatchers</name>
       <name>org.junit.Assert</name>
+      <name>org.junit.jupiter.api.Assertions.assertArrayEquals</name>
     </included-static-names>
   </component>
 </project>
