@@ -21,6 +21,10 @@ dependencies {
 
     testImplementation 'org.seleniumhq.selenium:selenium-java:4.18.1'
     //implementation 'org.seleniumhq.selenium:selenium-devtools-v148:4.18.1'
+    testImplementation 'org.seleniumhq.selenium:selenium-remote-driver:4.18.1'
+
+    testImplementation 'org.slf4j:slf4j-api:2.0.16'
+    testRuntimeOnly 'ch.qos.logback:logback-classic:1.5.17'
 }
 
 test {

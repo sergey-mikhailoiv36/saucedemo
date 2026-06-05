@@ -46,8 +46,8 @@ public class ApplicationManager {
 
             if (useDocker) {
                 try {
-                    // Запускаем в Docker-контейнере
-                    options.addArguments("--headless=new");
+                    // Запускаем в Docker-контейнере "--headless=new" запуск без графического интерфейса
+                    //options.addArguments("--headless=new");
                     driver = new RemoteWebDriver(new URL("http://localhost:4444"), options);
                 } catch (Exception e) {
                     e.printStackTrace();

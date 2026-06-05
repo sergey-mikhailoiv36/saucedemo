@@ -2,16 +2,20 @@ package com.saucedemo.testing;
 
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
 public class TestSauscedemoCart extends  TestBase {
 
+    private static Logger logger = LoggerFactory.getLogger(TestSauscedemoCart.class);
 
 
     @Test
     public void testAddCart() throws InterruptedException {
+        logger.info("тест логов");
         app.login("standard_user","secret_sauce");
         int countProduct=app.driver.findElements(By.cssSelector(".btn.btn_primary.btn_small.btn_inventory")).size();
 
@@ -25,8 +29,9 @@ public class TestSauscedemoCart extends  TestBase {
 
         Object[][] itemInCartArray = app.getChecHelper().allItemArray((countProduct),"cart"); //получаем массив со всеми товарами в корзине
 
-        System.out.println(Arrays.deepToString(itemArray));
-        System.out.println(Arrays.deepToString(itemInCartArray));
+        logger.info("Информация о всех товарах на странице: \n{}",Arrays.deepToString(itemArray));
+        logger.info("Информация о всех товарах в корзине: \n{}",Arrays.deepToString(itemInCartArray));
+
 
         app.getChecHelper().checProductLists(itemArray,itemInCartArray); // сравниваем количество товаров в массивах
 
@@ -44,8 +49,8 @@ public class TestSauscedemoCart extends  TestBase {
             allItemPrace = allItemPrace+(double)itemArray[i][2];
         }
 
-        System.out.println("Цена на странице "+tatalPrice);
-        System.out.println("Цена из массива "+allItemPrace);
+        logger.info("Цена на странице="+tatalPrice);
+        logger.info("Цена из массива="+allItemPrace);
 
         TimeUnit.SECONDS.sleep(10);
 

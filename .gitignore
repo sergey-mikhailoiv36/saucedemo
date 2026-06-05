@@ -45,6 +45,10 @@ bin/
 # Test resources (если нужно)
 src/test/resources/users.txt
 
+#Logs
+logs/
 
 # Test
 src/test/java/com/saucedemo/testing/testOne.java
+src/test/java/com/saucedemo/generator/
+
