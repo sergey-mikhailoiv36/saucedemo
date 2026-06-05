@@ -8,7 +8,9 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
+import java.net.URL;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
@@ -20,6 +22,7 @@ public class ApplicationManager {
 
     private String browser;
     public WebDriver driver;
+    private boolean useDocker = false;
 
     private NavigationHelper navigationHelper ;
     private ChecHelper checHelper ;
@@ -30,8 +33,9 @@ public class ApplicationManager {
 
     private StringBuffer verificationErrors = new StringBuffer();
 
-    public ApplicationManager(String browser) {
+    public ApplicationManager(String browser,boolean useDocker) {
         this.browser=browser;
+        this.useDocker=useDocker;
     }
 
 
@@ -39,7 +43,18 @@ public class ApplicationManager {
 
         if (Objects.equals(browser, "CHROME")){
              ChromeOptions options = getChromeOptions();
-             driver = new ChromeDriver(options);
+
+            if (useDocker) {
+                try {
+                    // Запускаем в Docker-контейнере
+                    options.addArguments("--headless=new");
+                    driver = new RemoteWebDriver(new URL("http://localhost:4444"), options);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else {
+                driver = new ChromeDriver(options);
+            }
          } else if (Objects.equals(browser, "FIREFOX")) {
              driver = new FirefoxDriver();
          } else if (Objects.equals(browser, "EDGE")) {

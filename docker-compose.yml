@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+
+  # Сервис браузера: запускаем отдельный контейнер с Chrome
+  chrome:
+    image: selenium/standalone-chrome:latest
+    ports:
+      - "4444:4444"  # Порт для подключения Selenium
+    # Увеличиваем шансы на стабильную работу, если тесты быстрые
+    shm_size: 2gb
+
+  # Сервис вашего приложения с тестами
+  tests:
+    build: .
+    depends_on:
+      - chrome
+    environment:
+      - SELENIUM_HOST=chrome        # Адрес сервиса браузера
+      - SELENIUM_PORT=4444
+    # Переопределяем команду, указывая правильный путь к тестам
+    command: ["./gradlew", "clean", "test", "--tests", "com.saucedemo.testing.*"]
+    volumes:
+      - ./build/reports:/app/build/reports

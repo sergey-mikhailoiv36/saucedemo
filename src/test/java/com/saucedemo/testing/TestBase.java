@@ -13,7 +13,7 @@ import org.testng.annotations.BeforeSuite;
 public class TestBase {
 
 
-    public static final ApplicationManager app = new ApplicationManager("CHROME"); // возможные значения FIREFOX/CHROME/EDGE-"не работает(проблемы в сети)"/
+    public static final ApplicationManager app = new ApplicationManager("CHROME",true); // возможные значения FIREFOX/CHROME/EDGE-"не работает(проблемы в сети)"/
 
     @BeforeAll
     static void setUp() throws Exception {
