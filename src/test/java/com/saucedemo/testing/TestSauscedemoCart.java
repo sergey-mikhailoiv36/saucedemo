@@ -10,7 +10,6 @@ import java.util.concurrent.TimeUnit;
 
 public class TestSauscedemoCart extends  TestBase {
 
-    private static Logger logger = LoggerFactory.getLogger(TestSauscedemoCart.class);
 
 
     @Test
@@ -20,16 +19,19 @@ public class TestSauscedemoCart extends  TestBase {
         int countProduct=app.driver.findElements(By.cssSelector(".btn.btn_primary.btn_small.btn_inventory")).size();
 
         Object[][] itemArray = app.getChecHelper().allItemArray(countProduct,"product"); //получаем массив со всеми товарами на главной странице
-
+        logger.info("Информация о всех товарах на странице: \n{}",Arrays.deepToString(itemArray));
+        logger.info("Добавление товаров в корзину");
         for (int i = 0; i<countProduct;i++) {
+            logger.info("добавляем товар в корзину с название "+itemArray[i][0]);
             app.getNavigationHelper().addCart((String) itemArray[i][3]); //добавляем в корзину все товары
         }
 
+        logger.info("Переход в корзину");
         app.getNavigationHelper().goTo("cart"); //переход в корзину
 
         Object[][] itemInCartArray = app.getChecHelper().allItemArray((countProduct),"cart"); //получаем массив со всеми товарами в корзине
 
-        logger.info("Информация о всех товарах на странице: \n{}",Arrays.deepToString(itemArray));
+
         logger.info("Информация о всех товарах в корзине: \n{}",Arrays.deepToString(itemInCartArray));
 
 
@@ -52,7 +54,7 @@ public class TestSauscedemoCart extends  TestBase {
         logger.info("Цена на странице="+tatalPrice);
         logger.info("Цена из массива="+allItemPrace);
 
-        TimeUnit.SECONDS.sleep(10);
+        //        TimeUnit.SECONDS.sleep(10);
 
     }
 

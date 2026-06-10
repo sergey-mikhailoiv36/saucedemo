@@ -6,8 +6,11 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.remote.Browser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
+import org.junit.jupiter.api.Test;
 
 
 public class TestBase {
@@ -17,6 +20,7 @@ public class TestBase {
 
     //true-запускаем тесты в докере
     public static final ApplicationManager app = new ApplicationManager("CHROME",true); // возможные значения FIREFOX/CHROME/EDGE-"не работает(проблемы в сети)"/
+    public static Logger logger = LoggerFactory.getLogger(TestSauscedemoCart.class);
 
 
     @BeforeAll
