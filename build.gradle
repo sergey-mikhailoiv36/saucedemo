@@ -27,6 +27,8 @@ dependencies {
     testRuntimeOnly 'ch.qos.logback:logback-classic:1.5.17'
     //  для тестирования API
     testImplementation 'io.rest-assured:rest-assured:5.4.0'
+    // Jackson для сериализации Java объектов в JSON
+    testImplementation 'com.fasterxml.jackson.core:jackson-databind:2.17.0'
 }
 
 test {
