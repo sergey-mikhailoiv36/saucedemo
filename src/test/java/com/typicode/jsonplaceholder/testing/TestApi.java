@@ -1,39 +1,55 @@
-package com.saucedemo.testing;
+package com.typicode.jsonplaceholder.testing;
 
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.hamcrest.Matchers.equalTo;
 import static io.restassured.RestAssured.given;
 
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class TestApi extends TestBase {
+public class TestApi extends TestBaseApi {
 
 
     //@Disabled // <-- Этот тест будет пропущен
     @Test
     @Order(1)
     public void testGetSingleUser() throws InterruptedException {
-        logger.info("Get Запрос 'https://jsonplaceholder.typicode.com/users/1'  ");
-        String responseBody = given()
-                .baseUri("https://jsonplaceholder.typicode.com") // Устанавливаем базовый URL
-                .basePath("/users/1")                           // Указываем путь к ресурсу
-                .log().all()
-                .when()
-                .get()                                   // Выполняем GET-запрос
-                .then()
-                .statusCode(200)                                // Проверяем статус-код
-                .body("id", equalTo(1))                  // Проверяем, что id пользователя равен 1
-                .body("name", equalTo("Leanne Graham"))  // Проверяем имя
-                .body("email", equalTo("Sincere@april.biz")) // Проверяем email
-                .body("address.city", equalTo("Gwenborough"))
-                .body("address.geo.lng", equalTo("81.1496"))
-                .extract().asString(); // Проверяем вложенное поле city
-        //System.out.println(responsBody);
+        String uri="https://jsonplaceholder.typicode.com";
+        String path="/users/";
+        int userId=1;
+        List<Integer> faileProduct = new ArrayList<>();
+        logger.info("Get Запрос " + uri+path+userId);
 
-        logger.info("Ответ: \n{}", responseBody);
+        Response response = given().baseUri(uri).basePath(path+userId).when().get(); //Выполняем запрос
+
+        if (response.statusCode() != 200){
+            faileProduct.add(userId);
+            logger.error("Статус: "+response.statusCode());
+            logger.error("Ответ: \n{}", response.asString());
+        } else {
+            try {
+                response.then()
+                        .body("id", equalTo(userId))                  // Проверяем, что id пользователя равен 1
+                        .body("name", equalTo("Leanne Graham"))  // Проверяем имя
+                        .body("email", equalTo("Sincere@april.biz")) // Проверяем email
+                        .body("address.city", equalTo("Gwenborough"))
+                        .body("address.geo.lng", equalTo("81.1496"));
+                logger.info("Тест пройден: \n Статус: {}\n Тело ответа {}",response.statusCode(),response.asString());
+                 }
+                    catch (AssertionError error){
+                    faileProduct.add(userId);
+                    logger.error("Статус: "+response.statusCode());
+                    logger.error("Ответ: \n{}", response.asString());
+                    }
+            }
+        if (!faileProduct.isEmpty()){ //если НЕ пустой (есть ошибки)
+            Assertions.fail("Тест не пройден");
+        }
     }
 
     @Disabled // <-- Этот тест будет пропущен
@@ -151,7 +167,7 @@ public class TestApi extends TestBase {
     }
 
     @Test
-    @Order(5)
+    @Order(6)
     public void testDelete() {
 
         Response response = given()
