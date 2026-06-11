@@ -24,12 +24,15 @@ public class TestApi extends TestBaseApi {
     public void testGetSingleUser() {
         int faileProduct = 0;
         logger.info("Get Запрос " + url +path+userId);
-        Response response = given().baseUri(url).basePath(path+userId).when().get(); //Выполняем запрос
+        Response response = given().
+                baseUri(url).
+                basePath(path+userId).
+                when().
+                get(); //Выполняем запрос
 
         if (response.statusCode() != 200){
             faileProduct=+1;
-            logger.error("Статус: "+response.statusCode());
-            logger.error("Ответ: \n{}", response.asString());
+            logger.error("Статус: {} Ответ: {}",response.statusCode(),response.asString());
         } else {
             try {
                 response.then()
@@ -42,8 +45,7 @@ public class TestApi extends TestBaseApi {
                  }
                     catch (AssertionError error){
                         faileProduct=+1;
-                    logger.error("Статус: "+response.statusCode());
-                    logger.error("Ответ: \n{}", response.asString());
+                    logger.error("Ошибка: {} Статус: {} Ответ: \n{} ", error.getMessage(),response.statusCode(),response.asString());
                     }
             }
         if (faileProduct != 0){ //если НЕ пустой (есть ошибки)
@@ -54,53 +56,102 @@ public class TestApi extends TestBaseApi {
     @Test
     @Order(2)
     public void testPost() {
+        int faileProduct = 0;
+        //int id=1; // тест ошибки
+        String title="Пост для проверки";
+        String body="Содержимое поста";
+        int userId=11;
 
         Map<String,Object> requestBody=new HashMap<>();
-        requestBody.put("title","Пост для проверки");
-        requestBody.put("body", "Содержимое поста");
-        requestBody.put("userId", 3);
+       // requestBody.put("id", id); // тест ошибки
+        requestBody.put("title",title);
+        requestBody.put("body", body);
+        requestBody.put("userId", userId);
 
+        logger.info("Post Запрос {} c параметрами {}" , url +post,requestBody);
+
+        //Выполняем запрос POST
         Response response = given()
                 .baseUri(url)
                 .contentType(ContentType.JSON)
                 .body(requestBody)
                 .when()
-                .post(post)
-                .then()
-                .statusCode(201)
-                .extract()
-                .response();
+                .post(post);
 
-        // Извлекаем данные из ответа
-        int postId = response.jsonPath().getInt("id");
-        String title = response.jsonPath().getString("title");
+        if (response.statusCode()!=201){
+            faileProduct=+1;
+            logger.error("Статус: {}",response.statusCode());
+        } else {
+            try {
+                response.then()
+                       // .body("id",equalTo(id)) // тест ошибки
+                        .body("title",equalTo(title))
+                        .body("body",equalTo(body))
+                        .body("userId",equalTo(userId));
+                // Извлекаем данные из ответа
+                int postId = response.jsonPath().getInt("id");
+                String responseTitle = response.jsonPath().getString("title");
 
-        System.out.println("Создан пост с ID: " + postId);
-        System.out.println("Заголовок: " + title);
-        System.out.println("Полный ответ: " + response.asPrettyString());
+                logger.info("Тест пройден \nСоздан новый пост с ID: {} Заголовок: {}",postId,responseTitle);
+                logger.info("Полный ответ: \n{}",response.asPrettyString());
+            }
+                catch (AssertionError error){
+                    faileProduct=+1;
+                    logger.error("Ошибка: {} Статус: {} Ответ: \n{} ", error.getMessage(),response.statusCode(),response.asString());
+                }
+        }
+        if (faileProduct != 0) { //если НЕ пустой (есть ошибки)
+            Assertions.fail("Тест c параметрами " + url + post + " " + requestBody+"  не пройден");
+        }
     }
 
     @Test
     @Order(3)
     public void testPut() {
+
+        int faileProduct = 0;
+        int id=1;
+        String title="Put для проверки";
+        String body="Put для проверки";
+        int userId=11;
+
         Map<String,Object> requestBody=new HashMap<>();
-        requestBody.put("id", 1);
-        requestBody.put("title", "Put для проверки");
-        requestBody.put("body", "Содержимое Put1");
-        requestBody.put("userId", 3);
+        //requestBody.put("id", id);
+        requestBody.put("title", title);
+        requestBody.put("body", body);
+        requestBody.put("userId", userId);
+
+        logger.info("Put Запрос {}/{} c параметрами {}" , url +post,userId,requestBody);
 
         Response response = given()
                 .baseUri(url)
                 .contentType(ContentType.JSON)
                 .body(requestBody)
                 .when()
-                .put(post+"/1")
-                .then()
-                .statusCode(200)
-                .extract()
-                .response();
+                .put(post+"/"+id);
 
-        System.out.println("Полный ответ: " + response.asPrettyString());
+        if (response.statusCode()!=200){
+            faileProduct=+1;
+            logger.error("Статус: {}",response.statusCode());
+        } else {
+            try {
+                response.then()
+                        .statusCode(200)
+                        .body("id",equalTo(id))
+                        .body("title",equalTo(title))
+                        .body("body",equalTo(body))
+                        .body("userId",equalTo(userId));
+
+                logger.info("Тест пройден \nСтатус {} \nПолный ответ: \n{}",response.statusCode(),response.asPrettyString());
+            }
+            catch (AssertionError error){
+                faileProduct=+1;
+                logger.error("Ошибка: {} Статус: {} Ответ: \n{} ", error.getMessage(),response.statusCode(),response.asString());
+            }
+        }
+        if (faileProduct != 0) { //если НЕ пустой (есть ошибки)
+            Assertions.fail("Тест c параметрами " + url + post + " " + requestBody+"  не пройден");
+        }
     }
 
     @Test
@@ -141,4 +192,5 @@ public class TestApi extends TestBaseApi {
 
         System.out.println("Полный ответ: " + response.statusCode());
     }
+
 }
